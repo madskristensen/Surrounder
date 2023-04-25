@@ -26,6 +26,7 @@ namespace Surrounder
             { '{', "}"},
             { '[', "]"},
             { '<', ">"},
+            { '`', "`"},
         };
 
         public string DisplayName => nameof(InsertTextCommand);
