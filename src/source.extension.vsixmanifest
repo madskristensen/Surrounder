@@ -4,6 +4,8 @@
         <Identity Id="Surrounder.8cbb0f4d-2348-463a-aa72-a5b4a62ac4ba" Version="1.0" Language="en-US" Publisher="Mads Kristensen" />
         <DisplayName>Surrounder</DisplayName>
         <Description xml:space="preserve">Surrounds any selected texts with matching quotation or brace pairs</Description>
+        <MoreInfo>https://github.com/madskristensen/Surrounder</MoreInfo>
+        <License>Resources\LICENSE</License>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
         <Tags>quote, brace, pairs, selection</Tags>
