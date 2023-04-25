@@ -1,12 +1,11 @@
-﻿using Microsoft.VisualStudio.Commanding;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
-
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
 
 namespace Surrounder
 {
@@ -19,7 +18,7 @@ namespace Surrounder
         [Import]
         internal ITextUndoHistoryRegistry TextUndoHistoryRegistry = null; // Set via MEF
 
-        private static Dictionary<char, string> _pairs = new()
+        private static readonly Dictionary<char, string> _pairs = new()
         {
             { '\'', "'"},
             { '"', "\""},
@@ -50,28 +49,27 @@ namespace Surrounder
             }
 
             // At this point we should execute our logic
-            var undoHistory = TextUndoHistoryRegistry.RegisterHistory(args.TextView);
+            ITextUndoHistory undoHistory = TextUndoHistoryRegistry.RegisterHistory(args.TextView);
 
-            using (var transaction = undoHistory.CreateTransaction("Surround Selection"))
+            using (ITextUndoTransaction transaction = undoHistory.CreateTransaction("Surround Selection"))
             {
                 int start = args.TextView.Selection.SelectedSpans[0].Start.Position;
                 int length = args.TextView.Selection.SelectedSpans[0].Length;
-                
+
                 // 1. Insert the character pairs
-                using (var edit = args.TextView.TextBuffer.CreateEdit())
+                using (ITextEdit edit = args.TextView.TextBuffer.CreateEdit())
                 {
                     edit.Insert(start + length, _pairs[args.TypedChar]);
                     edit.Insert(start, args.TypedChar.ToString());
-
                     edit.Apply();
                 }
 
                 // 2. Re-set the selection
-                var newSelection = new SnapshotSpan(args.TextView.TextSnapshot, start + 1, length);
+                SnapshotSpan newSelection = new(args.TextView.TextSnapshot, start + 1, length);
                 args.TextView.Selection.Select(newSelection, false);
 
                 // 3. Move the caret to its new position
-                var newCaretPosition = new SnapshotPoint(args.TextView.TextSnapshot, start + length + 1);
+                SnapshotPoint newCaretPosition = new(args.TextView.TextSnapshot, start + length + 1);
                 args.TextView.Caret.MoveTo(newCaretPosition);
 
                 transaction.Complete();
