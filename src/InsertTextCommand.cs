@@ -50,7 +50,7 @@ namespace Surrounder
             }
 
             // At this point we should execute our logic
-            ITextUndoHistory undoHistory = TextUndoHistoryRegistry.RegisterHistory(args.TextView);
+            ITextUndoHistory undoHistory = TextUndoHistoryRegistry.RegisterHistory(args.TextView.TextBuffer);
 
             using (ITextUndoTransaction transaction = undoHistory.CreateTransaction("Surround Selection"))
             {
