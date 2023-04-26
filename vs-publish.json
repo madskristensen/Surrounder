@@ -6,6 +6,10 @@
     "tags": [ "quotes", "braces", "pairs" ]
   },
   "assetFiles": [
+    {
+      "pathOnDisk": "art/surrounder.gif",
+      "targetPath": "art/surrounder.gif"
+    }
   ],
   "overview": "README.md",
   "publisher": "MadsKristensen",

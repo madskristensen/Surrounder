@@ -13,6 +13,8 @@ or get the [CI build][vsixgallery].
 
 This extension makes it easy to surround the selected text with either quote- or brace pairs. 
 
+![Surrounder](art/surrounder.gif)
+
 Simply select some text and then hit they regular key for a quotation mark or brace. That will automatically insert the closing quote/brace at the end of the selection.
 
 ## How can I help?
