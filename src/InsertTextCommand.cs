@@ -36,7 +36,8 @@ namespace Surrounder
             // Cheap checks to see if we should continue
             if (!_pairs.ContainsKey(args.TypedChar) || // Type char is valid token
                 args.TextView.Selection.IsEmpty || // Selection isn't empty
-                args.TextView.Selection.SelectedSpans.Count > 1) // Not multi-selection
+                args.TextView.Selection.SelectedSpans.Count > 1 || // Not multi-selection
+                args.TextView.Selection.SelectedSpans[0].Length == 1) // Selection isn't a single character
             {
                 return false;
             }
